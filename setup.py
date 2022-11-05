@@ -163,7 +163,7 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    entry_points={"console_scripts": ["funds-info=funds_info:main"]},  # Optional
+    entry_points={"console_scripts": ["funds-info=funds_info.cli:main"]},  # Optional
     # List additional URLs that are relevant to your project as a dict.
     #
     # This field corresponds to the "Project-URL" metadata fields:
