@@ -1,15 +1,36 @@
 import argparse
 import json
 
-import funds_info
+from funds_info import assets, gnucash, allocation_report
 
 
 def main():
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('instruments', metavar='instrument', type=str, nargs='+',
-                            help='an instrument to get info for')
-    args = vars(arg_parser.parse_args())
-    print(json.dumps(funds_info.get_instruments_info(args['instruments']), indent=2, ensure_ascii=False))
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(help='Commands description', required=True)
+
+    asset_data = subparsers.add_parser('data', help='Shows currency, fee, allocation data for provided list of tickers')
+    asset_data.set_defaults(cmd='data')
+    asset_data.add_argument('tickers', metavar='ticker', type=str, nargs='+',
+                            help='a ticker of an asset to get info for')
+
+    asset_allocation_gnucash = subparsers.add_parser(
+        'gnucash-allocation',
+        help='Generates allocation report based on GnuCash\'s Security Piechart and allocation data of its components')
+    asset_allocation_gnucash.set_defaults(cmd='gnucash-allocation')
+    asset_allocation_gnucash.add_argument(
+        "-r", "--report-name",
+        help="Name of report which contains securities allocation (default: Securities)",
+        nargs='?', const=1, type=str,
+        default="Securities")
+    asset_allocation_gnucash.add_argument("-f", "--datafile", required=True, type=str,
+                                          help="GnuCash datafile (.gnucash)")
+
+    args = parser.parse_args()
+
+    if args.cmd == 'data':
+        print(json.dumps(assets.get_data(args.tickers), indent=2, ensure_ascii=False))
+    elif args.cmd == 'gnucash-allocation':
+        allocation_report.generate(gnucash.get_value_by_instrument(report_name=args.report_name, datafile=args.datafile))
 
 
 if __name__ == '__main__':

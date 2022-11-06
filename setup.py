@@ -103,7 +103,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords="etf пиф бпиф allocation moex tinkoff finex",  # Optional
+    keywords="etf pif bpif allocation moex tinkoff finex gnucash",  # Optional
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
     #
@@ -126,7 +126,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['requests'],  # Optional
+    install_requires=['cache-to-disk', 'pycountry', 'requests'],  # Optional
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:

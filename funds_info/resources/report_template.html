@@ -1,0 +1,74 @@
+<html>
+<head>
+  <style type="text/css">
+    #container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+    }
+    #container > div {
+      flex-basis: 50%;
+    }
+    .chart {
+      padding: 5%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="%CHART_JS%"></script>
+  <script>
+    const colors = [ "#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA" ];
+
+    const ccyFormatter = new Intl.NumberFormat('%LOCALE%', { style: 'currency', currency: '%CURRENCY%' });
+
+    function getConfig(chartTitle, tickerToVolume) {
+      const totalBalance = Object.values(tickerToVolume).reduce((a,b) => a + b, 0);
+      function toLabels(tickerToVolume) {
+        return Object.entries(tickerToVolume)
+        .map((arr) => arr[0] + ' - ' + ccyFormatter.format(arr[1]) + ' (' + Math.round(arr[1]/totalBalance*1000)/10 + '%)');
+      }
+      return {
+        type: 'pie',
+        data: {
+          labels: toLabels(tickerToVolume),
+          datasets: [{
+            backgroundColor: colors,
+            borderColor: colors,
+            data: Object.values(tickerToVolume),
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: [chartTitle, ccyFormatter.format(totalBalance)],
+              fullSize: true,
+              font: {
+                size: 20
+              }
+            },
+            legend: {
+              position: "right",
+              maxWidth: 300
+            },
+            tooltip: true,
+          }
+        }
+      };
+    }
+
+    const parameters = %PLACEHOLDER%;
+
+    const container = document.getElementById("container");
+    var index = 1;
+    for (const param of parameters) {
+      const elem = document.createElement("div");
+      elem.innerHTML = `<canvas id="chart${index}" class="chart"></canvas>`;
+      container.appendChild(elem);
+      new Chart(document.getElementById(`chart${index}`), getConfig(param.title, param.allocations));
+      index++;
+    }
+  </script>
+</body>
+</html>

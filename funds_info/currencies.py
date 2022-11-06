@@ -1,13 +1,13 @@
 import pycountry
 
 
-def currencies(instruments: list[str]) -> dict[str, dict]:
+def currencies(currency_codes: list[str]) -> dict[str, dict]:
     result = {}
-    for instrument in instruments:
-        currency = pycountry.currencies.get(alpha_3=instrument)
+    for currency_code in currency_codes:
+        currency = pycountry.currencies.get(alpha_3=currency_code)
         if currency is None:
             continue
-        result[instrument] = {
+        result[currency_code] = {
             'countries': {
                 _to_country(currency.alpha_3): 1
             },

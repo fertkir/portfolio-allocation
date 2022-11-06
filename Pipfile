@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+cache-to-disk= "*"
+pycountry = "*"
 requests = "*"
 
 [dev-packages]
-cache-to-disk= "*"
 pipenv-setup = "*"
-pycountry = "*"
 vistir = "==0.6.1" # https://github.com/Madoshakalaka/pipenv-setup/issues/138
 
 [requires]
