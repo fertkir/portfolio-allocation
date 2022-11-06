@@ -7,7 +7,9 @@ name = "pypi"
 requests = "*"
 
 [dev-packages]
+cache-to-disk= "*"
 pipenv-setup = "*"
+pycountry = "*"
 vistir = "==0.6.1" # https://github.com/Madoshakalaka/pipenv-setup/issues/138
 
 [requires]
