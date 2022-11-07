@@ -17,7 +17,7 @@ def funds(tickers: list[str]) -> dict[str, dict]:
                 result[ticker] = _tinkoff(ticker)
             else:
                 continue
-        except InstrumentMissingException:
+        except _InstrumentMissingException:
             continue
     return result
 
@@ -26,13 +26,13 @@ def funds(tickers: list[str]) -> dict[str, dict]:
 def _finex(ticker: str) -> dict:
     r = requests.get("https://finex-etf.ru/products/" + ticker)
     if r.status_code == 404:
-        raise InstrumentMissingException
+        raise _InstrumentMissingException
     group = re.search('<script id="__NEXT_DATA__" type="application/json">([^<]*)</script>', r.text).group(1)
     data = json.loads(group)
     try:
         response_data = data['props']['pageProps']['initialState']['fondDetail']['responseData']
     except IndexError:
-        raise InstrumentMissingException
+        raise _InstrumentMissingException
     return {
         'countries': response_data['share'].get('countryShare'),
         'industries': response_data['share'].get('otherShare'),
@@ -56,7 +56,7 @@ def _tinkoff(ticker: str) -> dict:
     try:
         response_data = data['queries'][0]['state']['data']['detail']
     except IndexError:
-        raise InstrumentMissingException
+        raise _InstrumentMissingException
     return {
         'countries': _tinkoff_chart_to_shares(response_data, 'countries'),
         'industries': _tinkoff_chart_to_shares(response_data, 'sectors'),
@@ -73,5 +73,5 @@ def _tinkoff_chart_to_shares(response_data: dict, key: str) -> dict[str, float]:
             next(filter(lambda obj: obj['type'] == key, response_data['pies']['charts']))['items']}
 
 
-class InstrumentMissingException(Exception):
+class _InstrumentMissingException(Exception):
     pass

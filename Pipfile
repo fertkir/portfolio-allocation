@@ -7,6 +7,7 @@ name = "pypi"
 cache-to-disk= "*"
 pycountry = "*"
 requests = "*"
+yfinance = "*"
 
 [dev-packages]
 pipenv-setup = "*"

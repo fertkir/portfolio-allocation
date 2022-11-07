@@ -1,4 +1,4 @@
-from funds_info import currencies, funds
+from funds_info import currencies, funds, securities
 
 
 def get_data(tickers: list[str]) -> dict[str, dict]:
@@ -8,4 +8,5 @@ def get_data(tickers: list[str]) -> dict[str, dict]:
     info_by_fund = funds.funds(not_currencies)
     _funds = info_by_fund.keys()
     other = list(filter(lambda ticker: ticker not in _funds, not_currencies))
-    return info_by_currency | info_by_fund
+    _securities = securities.securities(other)
+    return info_by_currency | info_by_fund | _securities
