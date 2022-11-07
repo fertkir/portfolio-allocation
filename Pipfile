@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 cache-to-disk= "*"
+countrynames= "*"
 pycountry = "*"
 requests = "*"
 yfinance = "*"

@@ -1,3 +1,4 @@
+import pycountry
 import yfinance
 from cache_to_disk import cache_to_disk
 
@@ -22,7 +23,7 @@ def _yahoo(ticker: str) -> dict:
         raise _InstrumentMissingException
     return {
         'countries': {
-            'Russia': 1
+            pycountry.countries.get(alpha_2='RU').name: 1  # todo it must not be always RU
         },
         'industries': {
             info['sector']: 1

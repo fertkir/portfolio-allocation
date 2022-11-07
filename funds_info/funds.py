@@ -4,6 +4,8 @@ import re
 import requests
 from cache_to_disk import cache_to_disk
 
+from funds_info.util import map_keys, country_name_to_english
+
 _DEFAULT_CACHE_AGE = 30
 
 
@@ -34,7 +36,7 @@ def _finex(ticker: str) -> dict:
     except IndexError:
         raise _InstrumentMissingException
     return {
-        'countries': response_data['share'].get('countryShare'),
+        'countries': map_keys(response_data['share'].get('countryShare'), country_name_to_english),
         'industries': response_data['share'].get('otherShare'),
         'fee': response_data['commission'],
         'currencies': {
@@ -58,7 +60,7 @@ def _tinkoff(ticker: str) -> dict:
     except IndexError:
         raise _InstrumentMissingException
     return {
-        'countries': _tinkoff_chart_to_shares(response_data, 'countries'),
+        'countries': map_keys(_tinkoff_chart_to_shares(response_data, 'countries'), country_name_to_english),
         'industries': _tinkoff_chart_to_shares(response_data, 'sectors'),
         'fee': response_data['expense']['total'],
         'currencies': {
