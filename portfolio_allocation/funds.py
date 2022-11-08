@@ -4,7 +4,7 @@ import re
 import requests
 from cache_to_disk import cache_to_disk
 
-from funds_info.util import map_keys, country_name_to_english
+from portfolio_allocation.util import map_keys, country_name_to_english
 
 _DEFAULT_CACHE_AGE = 30
 

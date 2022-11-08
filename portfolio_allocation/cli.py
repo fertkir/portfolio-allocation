@@ -1,7 +1,7 @@
 import argparse
 import json
 
-from funds_info import assets, gnucash, allocation_report
+from portfolio_allocation import assets, gnucash, allocation_report
 
 
 def main():

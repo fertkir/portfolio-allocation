@@ -9,8 +9,8 @@ from os.path import expanduser, dirname, realpath, join, exists
 
 import requests
 
-from funds_info import assets
-from funds_info import resources
+from portfolio_allocation import assets
+from portfolio_allocation import resources
 
 _CHART_JS_URL = 'https://cdn.jsdelivr.net/npm/chart.js'
 _CACHE_DIR = expanduser(join(dirname(realpath(__file__)), 'cache'))

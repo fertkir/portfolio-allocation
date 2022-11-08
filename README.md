@@ -1,2 +1,2 @@
-# funds-info
-Scrapes allocations, fees and other info for ETFs and mutual funds
+# portfolio-allocation
+Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds

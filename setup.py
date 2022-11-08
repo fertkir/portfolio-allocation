@@ -36,18 +36,18 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name="funds_info",  # Required
+    name="portfolio-allocation",  # Required
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
     #
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.0.3",  # Required
+    version="0.0.1",  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description="Scrapes allocations, fees and other info for ETFs and mutual funds",  # Optional
+    description="Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds",  # Optional
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
     #
@@ -72,7 +72,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url="https://github.com/fertkir/funds-info",  # Optional
+    url="https://github.com/fertkir/portfolio-allocation",  # Optional
     # This should be your name or the name of the organization which owns the
     # project.
     author="Kirill Fertikov",  # Optional
@@ -103,7 +103,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords="etf pif bpif allocation moex tinkoff finex gnucash",  # Optional
+    keywords="etf allocation moex tinkoff finex gnucash",  # Optional
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
     #
@@ -163,7 +163,7 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    entry_points={"console_scripts": ["funds-info=funds_info.cli:main"]},  # Optional
+    entry_points={"console_scripts": ["portfolio-allocation=portfolio_allocation.cli:main"]},  # Optional
     # List additional URLs that are relevant to your project as a dict.
     #
     # This field corresponds to the "Project-URL" metadata fields:
@@ -174,7 +174,7 @@ setup(
     # maintainers, and where to support the project financially. The key is
     # what's used to render the link text on PyPI.
     project_urls={  # Optional
-        "Bug Reports": "https://github.com/fertkir/funds-info/issues",
-        "Source": "https://github.com/fertkir/funds-info",
+        "Bug Reports": "https://github.com/fertkir/portfolio-allocation/issues",
+        "Source": "https://github.com/fertkir/portfolio-allocation",
     },
 )
