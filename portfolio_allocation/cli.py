@@ -1,8 +1,11 @@
 import argparse
 import json
+import os
 import sys
 
 from . import instruments, gnucash, report
+
+_DEFAULT_REPORT_NAME_ENV_VAR = 'PORTFOLIO_ALLOCATION_GNUCASH_REPORT'
 
 
 def main():
@@ -22,7 +25,7 @@ def main():
         "-r", "--report-name",
         help="Name of report which contains securities allocation. Default: Securities",
         nargs='?', const=1, type=str,
-        default="Securities")
+        default=os.environ.get(_DEFAULT_REPORT_NAME_ENV_VAR, 'Securities'))
 
     default_datafile = _get_latest_file()
     if default_datafile is None:
