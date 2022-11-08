@@ -1,5 +1,6 @@
 import argparse
 import json
+import sys
 
 from . import instruments, gnucash, report
 
@@ -19,11 +20,20 @@ def main():
     asset_allocation_gnucash.set_defaults(cmd='gnucash-allocation')
     asset_allocation_gnucash.add_argument(
         "-r", "--report-name",
-        help="Name of report which contains securities allocation (default: Securities)",
+        help="Name of report which contains securities allocation. Default: Securities",
         nargs='?', const=1, type=str,
         default="Securities")
-    asset_allocation_gnucash.add_argument("-f", "--datafile", required=True, type=str,
-                                          help="GnuCash datafile (.gnucash)")
+
+    default_datafile = _get_latest_file()
+    if default_datafile is None:
+        asset_allocation_gnucash.add_argument("-f", "--datafile", required=True, type=str,
+                                              help="GnuCash datafile (.gnucash)")
+    else:
+        asset_allocation_gnucash.add_argument(
+            "-f", "--datafile",
+            help="GnuCash datafile (.gnucash). Default: " + default_datafile,
+            nargs='?', const=1, type=str,
+            default=default_datafile)
 
     args = parser.parse_args()
 
@@ -32,6 +42,22 @@ def main():
     elif args.cmd == 'gnucash-allocation':
         parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=args.report_name, datafile=args.datafile)
         report.generate(parsed_gnucash_report.value_by_instrument, parsed_gnucash_report.currency)
+
+
+def _get_latest_file():
+    # from https://github.com/sdementen/gnucash-utilities/blob/develop/piecash_utilities/config.py
+    if sys.platform.startswith("linux"):
+        import subprocess
+        try:
+            output_dconf = subprocess.check_output(["dconf", "dump", "/org/gnucash/GnuCash/history/"]).decode()
+            from configparser import ConfigParser
+            conf = ConfigParser()
+            conf.read_string(output_dconf)
+            return conf["/"]["file0"][1:-1]
+        except:
+            return None
+    else:
+        return None
 
 
 if __name__ == '__main__':
