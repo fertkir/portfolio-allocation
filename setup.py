@@ -43,11 +43,11 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.0.8",  # Required
+    version="0.0.9",  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description="Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds",  # Optional
+    description="Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds",
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
     #
@@ -103,7 +103,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords="etf allocation moex tinkoff finex gnucash",  # Optional
+    keywords="etf allocation moex tinkoff finex gnucash",
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
     #
@@ -126,7 +126,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['cache-to-disk', 'countrynames', 'pycountry', 'requests', 'yfinance'],  # Optional
+    install_requires=['cache-to-disk', 'countrynames', 'pycountry', 'requests', 'yfinance'],
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:
@@ -149,7 +149,7 @@ setup(
     dependency_links=[],
     # If using Python 2.6 or earlier, then these have to be included in
     # MANIFEST.in as well.
-    # package_data={"sample": ["package_data.dat"]},  # Optional
+    package_data={"portfolio_allocation.report.resources": ["report_template.html"]},
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
