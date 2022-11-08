@@ -1,4 +1,4 @@
-from portfolio_allocation import currencies, funds, securities
+from portfolio_allocation.instruments import currencies, funds, securities
 
 
 def get_data(tickers: list[str]) -> dict[str, dict]:

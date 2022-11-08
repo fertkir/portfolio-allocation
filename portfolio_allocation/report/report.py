@@ -9,8 +9,8 @@ from os.path import expanduser, dirname, realpath, join, exists
 
 import requests
 
-from portfolio_allocation import assets
-from portfolio_allocation import resources
+from portfolio_allocation import instruments
+from portfolio_allocation.report import resources
 
 _CHART_JS_URL = 'https://cdn.jsdelivr.net/npm/chart.js'
 _CACHE_DIR = expanduser(join(dirname(realpath(__file__)), 'cache'))
@@ -29,7 +29,7 @@ class _Chart:
 
 
 def generate(value_by_ticker: dict[str, float], currency: str = _DEFAULT_CURRENCY, user_locale: str = _DEFAULT_LOCALE):
-    data_by_ticker = assets.get_data(list(value_by_ticker.keys()))
+    data_by_ticker = instruments.get_data(list(value_by_ticker.keys()))
     _generate_report(currency, user_locale, [
         _Chart('Allocation by asset', value_by_ticker),
         _Chart('Allocation by currency', _value_by_field('currencies', value_by_ticker, data_by_ticker)),

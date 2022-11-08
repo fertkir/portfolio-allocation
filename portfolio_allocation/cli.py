@@ -1,7 +1,7 @@
 import argparse
 import json
 
-from portfolio_allocation import assets, gnucash, allocation_report
+from portfolio_allocation import instruments, gnucash, report
 
 
 def main():
@@ -28,10 +28,10 @@ def main():
     args = parser.parse_args()
 
     if args.cmd == 'data':
-        print(json.dumps(assets.get_data(args.tickers), indent=2, ensure_ascii=False))
+        print(json.dumps(instruments.get_data(args.tickers), indent=2, ensure_ascii=False))
     elif args.cmd == 'gnucash-allocation':
         parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=args.report_name, datafile=args.datafile)
-        allocation_report.generate(parsed_gnucash_report.value_by_instrument, parsed_gnucash_report.currency)
+        report.generate(parsed_gnucash_report.value_by_instrument, parsed_gnucash_report.currency)
 
 
 if __name__ == '__main__':
