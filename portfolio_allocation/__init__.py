@@ -1,2 +1,2 @@
-import portfolio_allocation.instruments
-import portfolio_allocation.report
+from . import instruments
+from . import report
