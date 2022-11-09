@@ -11,9 +11,7 @@ def currencies(currency_codes: list[str]) -> dict[str, dict]:
             'countries': {
                 _to_country(currency.alpha_3): 1
             },
-            'industries': {
-                'None': 1
-            },
+            'industries': {},
             'fee': 0,
             'currencies': {
                 currency.alpha_3: 1
