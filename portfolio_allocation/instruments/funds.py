@@ -35,8 +35,14 @@ def _finex(ticker: str) -> dict:
         response_data = data['props']['pageProps']['initialState']['fondDetail']['responseData']
     except IndexError:
         raise _InstrumentMissingException
+    country_share = response_data['share'].get('countryShare')
+    if country_share is None or country_share == {}:
+        try:
+            country_share = {response_data['name'].split("/")[1].strip(): 1}
+        except:
+            country_share = {}
     return {
-        'countries': map_keys(response_data['share'].get('countryShare'), country_name_to_english),
+        'countries': map_keys(country_share, country_name_to_english),
         'industries': response_data['share'].get('otherShare'),
         'fee': response_data['commission'],
         'currencies': {
