@@ -16,7 +16,11 @@ _CHART_JS_URL = 'https://cdn.jsdelivr.net/npm/chart.js'
 _CACHE_DIR = expanduser(join(dirname(realpath(__file__)), 'cache'))
 _CHART_JS_CACHE_FILE = expanduser(join(_CACHE_DIR, 'chart.js'))
 _DEFAULT_LOCALE = locale.getlocale()[0].replace('_', '-')
-_DEFAULT_CURRENCY = 'USD'  # todo default to a currency based on user's locale or GnuCash report
+try:
+    locale.setlocale(locale.LC_ALL, '')
+    _DEFAULT_CURRENCY = locale.localeconv().get('int_curr_symbol').strip()
+except:
+    _DEFAULT_CURRENCY = 'USD'
 
 
 @dataclass
