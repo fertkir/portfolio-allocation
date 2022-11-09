@@ -36,14 +36,14 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name="portfolio_allocation",  # Required
+    name="portfolio_allocation",
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
     #
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.0.10",  # Required
+    version="0.0.11",
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
@@ -56,7 +56,7 @@ setup(
     #
     # This field corresponds to the "Description" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#description-optional
-    long_description=long_description,  # Optional
+    long_description=long_description,
     # Denotes that our long_description is in Markdown; valid values are
     # text/plain, text/x-rst, and text/markdown
     #
@@ -67,18 +67,18 @@ setup(
     #
     # This field corresponds to the "Description-Content-Type" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#description-content-type-optional
-    long_description_content_type="text/markdown",  # Optional (see note above)
+    long_description_content_type="text/markdown",
     # This should be a valid link to your project's main homepage.
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url="https://github.com/fertkir/portfolio-allocation",  # Optional
+    url="https://github.com/fertkir/portfolio-allocation",
     # This should be your name or the name of the organization which owns the
     # project.
-    author="Kirill Fertikov",  # Optional
+    author="Kirill Fertikov",
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email="kirill.fertikov@gmail.com",  # Optional
+    author_email="kirill.fertikov@gmail.com",
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see https://pypi.org/classifiers/
@@ -113,7 +113,7 @@ setup(
     #
     #   py_modules=["my_module"],
     #
-    packages=find_packages(exclude=["contrib", "docs", "tests"]),  # Required
+    packages=find_packages(exclude=["contrib", "docs", "tests"]),
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
     # and refuse to install the project if the version does not match. If you
@@ -163,7 +163,7 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    entry_points={"console_scripts": ["portfolio-allocation=portfolio_allocation.cli:main"]},  # Optional
+    entry_points={"console_scripts": ["portfolio-allocation=portfolio_allocation.cli:main"]},
     # List additional URLs that are relevant to your project as a dict.
     #
     # This field corresponds to the "Project-URL" metadata fields:
