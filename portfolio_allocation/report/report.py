@@ -47,11 +47,13 @@ def _value_by_field(field: str,
         data = data_by_ticker.get(ticker)
         if data is None:
             print('No data for ticker "' + ticker + '", allocation report will not reflect it', file=sys.stderr)
-            break
+            continue
         share_by_value = data.get(field)
         if share_by_value is None:
-            break
+            continue
         for value, share in share_by_value.items():
+            if share == 0:
+                continue
             result[value] = result.setdefault(value, 0) + volume * share
     return result
 
