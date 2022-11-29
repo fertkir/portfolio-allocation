@@ -12,7 +12,7 @@ import requests
 from .. import instruments
 from . import resources
 
-_CHART_JS_URL = 'https://cdn.jsdelivr.net/npm/chart.js'
+_CHART_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js'
 _CACHE_DIR = expanduser(join(dirname(realpath(__file__)), 'cache'))
 _CHART_JS_CACHE_FILE = expanduser(join(_CACHE_DIR, 'chart.js'))
 _DEFAULT_LOCALE = locale.getlocale()[0].replace('_', '-')

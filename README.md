@@ -2,12 +2,12 @@
 Currency, country, asset class and industry allocations for portfolio of ETFs and mutual funds
 
 What the program does:
-1. Takes instrument allocation from [GnuCash's "Security" pie chart report](https://htmlpreview.github.io/?https://github.com/fertkir/portfolio-allocation/blob/master/examples/gnucash.html)
+1. Takes instrument allocation from [GnuCash's "Security" pie chart report](https://raw.githack.com/fertkir/portfolio-allocation/master/examples/gnucash.html)
 2. Fetches data for each instrument from the Internet:
    1. Finex website
    2. Tinkoff website
    3. Yahoo Finance
-3. Generates and opens [portfolio allocation report](https://htmlpreview.github.io/?https://github.com/fertkir/portfolio-allocation/blob/master/examples/allocation.html) in your browser.
+3. Generates and opens [portfolio allocation report](https://raw.githack.com/fertkir/portfolio-allocation/master/examples/allocation.html) in your browser.
 
 ## Installation
 ```commandline
