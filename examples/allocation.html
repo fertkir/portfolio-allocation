@@ -1,0 +1,74 @@
+<html>
+<head>
+  <style type="text/css">
+    #container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+    }
+    #container > div {
+      flex-basis: 50%;
+    }
+    .chart {
+      padding: 5%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const colors = [ "#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA" ];
+
+    const ccyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'RUB' });
+
+    function getConfig(chartTitle, tickerToVolume) {
+      const totalBalance = Object.values(tickerToVolume).reduce((a,b) => a + b, 0);
+      function toLabels(tickerToVolume) {
+        return Object.entries(tickerToVolume)
+        .map((arr) => arr[0] + ' - ' + ccyFormatter.format(arr[1]) + ' (' + Math.round(arr[1]/totalBalance*1000)/10 + '%)');
+      }
+      return {
+        type: 'pie',
+        data: {
+          labels: toLabels(tickerToVolume),
+          datasets: [{
+            backgroundColor: colors,
+            borderColor: colors,
+            data: Object.values(tickerToVolume),
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: [chartTitle, ccyFormatter.format(totalBalance)],
+              fullSize: true,
+              font: {
+                size: 20
+              }
+            },
+            legend: {
+              position: "right",
+              maxWidth: 300
+            },
+            tooltip: true,
+          }
+        }
+      };
+    }
+
+    const parameters = [{ title: "Allocation by asset", allocations: {'FXCN': 10000.0, 'FXRL': 10000.0, 'USD': 10000.0, 'RUB': 10000.0, 'CNY': 10000.0, 'FXWO': 10000.0, 'FXGD': 10000.0, 'TMOS': 10000.0} }, { title: "Allocation by currency", allocations: {'USD': 50000.0, 'RUB': 20000.0, 'CNY': 10000.0} }, { title: "Allocation by country", allocations: {'China': 20675.38, 'Russian Federation': 30000.0, 'United States': 14138.4, 'Japan': 1772.85, 'Germany': 1649.57, 'Australia': 932.4000000000001, 'United Kingdom': 831.3900000000001} }, { title: "Allocation by industry", allocations: {'Финансы': 4690.25, 'Материалы': 2379.19, 'Энергетика': 9817.79, 'Недвижимость': 573.3299999999999, 'Промышленность': 1479.78, 'Здравоохранение': 1425.0300000000002, 'Коммунальные услуги': 561.6099999999999, 'Коммуникационные услуги': 4065.38, 'Информационные технологии': 3054.0299999999997, 'Потребительские товары выборочного спроса': 4902.66, 'Потребительские товары повседневного спроса': 1403.9499999999998, 'Финансовый сектор': 1933.9999999999998, 'Сырьевая промышленность': 1888.0, 'Телекоммуникации': 881.0, 'Потребительские товары': 721.0, 'Электроэнергетика': 177.0, 'Машиностроение и транспорт': 43.0, 'Денежные средства': 2.9999999999999996} }, { title: "Allocation by asset class", allocations: {'Акции': 40000.0, 'Cash': 30000.0, 'Биржевые товары': 10000.0} }];
+
+    const container = document.getElementById("container");
+    var index = 1;
+    for (const param of parameters) {
+      const elem = document.createElement("div");
+      elem.innerHTML = `<canvas id="chart${index}" class="chart"></canvas>`;
+      container.appendChild(elem);
+      new Chart(document.getElementById(`chart${index}`), getConfig(param.title, param.allocations));
+      index++;
+    }
+  </script>
+</body>
+</html>
