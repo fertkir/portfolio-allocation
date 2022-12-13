@@ -22,10 +22,10 @@ def main():
         help='Generates allocation report based on GnuCash\'s Security Piechart and allocation data of its components')
     asset_allocation_gnucash.set_defaults(cmd='gnucash')
     asset_allocation_gnucash.add_argument(
-        "-r", "--report-name",
+        "-r", "--report-names",
         help="Name of report which contains securities allocation. Default: Securities",
-        nargs='?', const=1, type=str,
-        default=os.environ.get(_DEFAULT_REPORT_NAME_ENV_VAR, 'Securities'))
+        nargs='+', type=str,
+        default=[os.environ.get(_DEFAULT_REPORT_NAME_ENV_VAR, 'Securities')])
 
     default_datafile = gnucash.get_latest_file()
     if default_datafile is None:
@@ -43,10 +43,11 @@ def main():
     if args.cmd == 'tickerdata':
         print(json.dumps(instruments.get_data(args.tickers), indent=2, ensure_ascii=False))
     elif args.cmd == 'gnucash':
-        parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=args.report_name, datafile=args.datafile)
-        report.generate(parsed_gnucash_report.title,
-                        parsed_gnucash_report.value_by_instrument,
-                        parsed_gnucash_report.currency)
+        for report_name in args.report_names:
+            parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=report_name, datafile=args.datafile)
+            report.generate(parsed_gnucash_report.title,
+                            parsed_gnucash_report.value_by_instrument,
+                            parsed_gnucash_report.currency)
 
 
 if __name__ == '__main__':
