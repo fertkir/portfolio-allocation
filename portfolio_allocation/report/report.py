@@ -32,10 +32,13 @@ class _Chart:
         return '{ title: "' + self.title + '", allocations: ' + str(self.allocations) + ' }'
 
 
-def generate(value_by_ticker: dict[str, float], currency: str = _DEFAULT_CURRENCY, user_locale: str = _DEFAULT_LOCALE):
+def generate(title: str,
+             value_by_ticker: dict[str, float],
+             currency: str = _DEFAULT_CURRENCY,
+             user_locale: str = _DEFAULT_LOCALE):
     data_by_ticker = instruments.get_data(list(value_by_ticker.keys()))
-    _generate_report(currency, user_locale, [
-        _Chart('Allocation by asset', value_by_ticker),
+    _generate_report(title, currency, user_locale, [
+        _Chart(title, value_by_ticker),
         _Chart('Allocation by currency', _value_by_field('currencies', value_by_ticker, data_by_ticker)),
         _Chart('Allocation by country', _value_by_field('countries', value_by_ticker, data_by_ticker)),
         _Chart('Allocation by industry', _value_by_field('industries', value_by_ticker, data_by_ticker)),
@@ -62,13 +65,14 @@ def _value_by_field(field: str,
     return result
 
 
-def _generate_report(currency: str, user_locale: str, charts: list[_Chart]):
+def _generate_report(title: str, currency: str, user_locale: str, charts: list[_Chart]):
     _ensure_chart_js_downloaded()
     report = pkg_resources.read_text(resources, 'report_template.html') \
         .replace('%PLACEHOLDER%', str(charts)) \
         .replace('%CHART_JS%', _CHART_JS_CACHE_FILE) \
         .replace('%CURRENCY%', currency) \
-        .replace('%LOCALE%', user_locale)
+        .replace('%LOCALE%', user_locale) \
+        .replace('%TITLE%', title)
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as file:
         file.write(report)
         webbrowser.open('file://' + file.name)

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ParsedGnuCashReport:
+    title: str
     currency: str
     value_by_instrument: dict[str, float]
 
@@ -22,7 +23,8 @@ def parse_value_by_instrument(html_report: str) -> ParsedGnuCashReport:
     volumes = list(
         map(float, re.split('\\s*,\\s*', re.search('"data"\\s*:\\s*\\[\\s*(.*)\\s*],', html_report).group(1))))
     currency = re.search('var\\s+curriso\\s*=\\s*"(.*)"\\s*;', html_report).group(1)
-    return ParsedGnuCashReport(currency, dict(zip(instruments, volumes)))
+    title = re.search('"text"\\s*:\\s*\\[\\s*"(.*)"\\s*,\\s*"(.*)"\\s*]', html_report).group(1)
+    return ParsedGnuCashReport(title, currency, dict(zip(instruments, volumes)))
 
 
 def get_latest_file():
