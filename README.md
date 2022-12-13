@@ -21,7 +21,7 @@ portfolio-allocation gnucash
 ```
 But you'd better customize it, since the "Securities" pie chart is limited to 7 instruments:
 ```commandline
-portfolio-allocation gnucash -r MyCustomReport
+portfolio-allocation gnucash -r MyCustomReport1 MuCustomReport2
 ```
 To select another GnuCash file:
 ```commandline
