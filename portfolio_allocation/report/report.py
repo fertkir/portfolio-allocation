@@ -11,10 +11,11 @@ import requests
 from . import resources
 from .. import instruments
 
-_CHART_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.min.js'
+_CHART_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js'
 _CACHE_DIR = expanduser(join(dirname(realpath(__file__)), 'cache'))
 _CHART_JS_CACHE_FILE = expanduser(join(_CACHE_DIR, 'chart.js'))
 _MAIN_JS_FILE = expanduser(join(dirname(realpath(__file__)), 'resources/main.js'))
+_MAIN_CSS_FILE = expanduser(join(dirname(realpath(__file__)), 'resources/main.css'))
 _DEFAULT_LOCALE = locale.getlocale()[0].replace('_', '-')
 try:
     locale.setlocale(locale.LC_ALL, '')
@@ -42,6 +43,7 @@ def _generate_report(title: str, currency: str, user_locale: str, data: list[dic
         .replace('%DATA%', json.dumps(data)) \
         .replace('%CHART_JS%', _CHART_JS_CACHE_FILE) \
         .replace('%MAIN_JS%', _MAIN_JS_FILE) \
+        .replace('%MAIN_CSS%', _MAIN_CSS_FILE) \
         .replace('%CURRENCY%', currency) \
         .replace('%LOCALE%', user_locale) \
         .replace('%TITLE%', title)

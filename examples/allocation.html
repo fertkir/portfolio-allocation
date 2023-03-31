@@ -2,21 +2,7 @@
 <html>
 <head>
     <title>Securities</title>
-    <style>
-        #container {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: space-around;
-        }
-
-        #container > #settings {
-            flex-basis: 20%;
-        }
-
-        #container > #chartContainer {
-            flex-basis: 50%;
-        }
-    </style>
+    <link rel="stylesheet" href="../portfolio_allocation/report/resources/main.css">
 </head>
 <body>
 <div id="container">
@@ -27,8 +13,8 @@
         <canvas id="chart" class="chart"></canvas>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.min.js"></script>
-<script src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.min.js"></script>
+<script src="../portfolio_allocation/report/resources/main.js"></script>
 <script>
     init('en-US', 'RUB', [
         {

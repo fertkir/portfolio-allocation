@@ -1,0 +1,13 @@
+#container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+#container > #settings {
+    flex-basis: 20%;
+}
+
+#container > #chartContainer {
+    flex-basis: 50%;
+}
