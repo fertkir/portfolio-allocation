@@ -1,3 +1,5 @@
+import sys
+
 import countrynames
 import pycountry
 
@@ -7,4 +9,8 @@ def map_keys(dictionary: dict[str, any], mapping_function) -> dict[str, any]:
 
 
 def country_name_to_english(name: str) -> str:
-    return pycountry.countries.get(alpha_2=countrynames.to_code(name)).name
+    try:
+        return pycountry.countries.get(alpha_2=countrynames.to_code(name)).name
+    except LookupError:
+        print('Unexpected country name: "' + name + '"', file=sys.stderr)
+        return name

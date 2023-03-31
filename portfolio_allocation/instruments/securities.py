@@ -1,3 +1,5 @@
+import sys
+
 import pycountry
 import yfinance
 from cache_to_disk import cache_to_disk
@@ -12,6 +14,7 @@ def securities(tickers: list[str]) -> dict[str, dict]:
         try:
             result[ticker] = _yahoo(ticker if ticker.__contains__(".") else ticker + "." + _DEFAULT_EXCHANGE)
         except _InstrumentMissingException:
+            print('No data for ticker "' + ticker + '", allocation report will not reflect it', file=sys.stderr)
             continue
     return result
 
