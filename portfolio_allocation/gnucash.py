@@ -11,6 +11,10 @@ class ParsedGnuCashReport:
     value_by_instrument: dict[str, float]
 
 
+class ParseException(Exception):
+    pass
+
+
 def get_value_by_instrument(report_name: str, datafile: str) -> ParsedGnuCashReport:
     cmd = ['gnucash-cli', '--report', 'run', '--name=' + report_name, datafile]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
@@ -18,7 +22,10 @@ def get_value_by_instrument(report_name: str, datafile: str) -> ParsedGnuCashRep
 
 
 def parse_value_by_instrument(html_report: str) -> ParsedGnuCashReport:
-    labels = re.split('"\\s*,\\s*"', re.search('"labels"\\s*:\\s*\\[\\s*"(.*)"\\s*],', html_report).group(1))
+    labels_match = re.search('"labels"\\s*:\\s*\\[\\s*"(.*)"\\s*],', html_report)
+    if labels_match is None:
+        raise ParseException("Could not find chart's labels in GnuCash's report")
+    labels = re.split('"\\s*,\\s*"', labels_match.group(1))
     instruments = [re.split('\\s*-\\s*', label)[0] for label in labels]
     volumes = list(
         map(float, re.split('\\s*,\\s*', re.search('"data"\\s*:\\s*\\[\\s*(.*)\\s*],', html_report).group(1))))

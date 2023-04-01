@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import sys
 
 from . import instruments, gnucash, report
 
@@ -44,10 +45,13 @@ def main():
         print(json.dumps(instruments.get_data(args.tickers), indent=2, ensure_ascii=False))
     elif args.cmd == 'gnucash':
         for report_name in args.report_names:
-            parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=report_name, datafile=args.datafile)
-            report.generate(parsed_gnucash_report.title,
-                            parsed_gnucash_report.value_by_instrument,
-                            parsed_gnucash_report.currency)
+            try:
+                parsed_gnucash_report = gnucash.get_value_by_instrument(report_name=report_name, datafile=args.datafile)
+                report.generate(parsed_gnucash_report.title,
+                                parsed_gnucash_report.value_by_instrument,
+                                parsed_gnucash_report.currency)
+            except gnucash.ParseException as e:
+                print(e, file=sys.stderr)
 
 
 if __name__ == '__main__':
