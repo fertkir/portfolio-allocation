@@ -1,5 +1,6 @@
 import json
 import re
+import time
 
 import requests
 from cache_to_disk import cache_to_disk
@@ -26,7 +27,11 @@ def funds(tickers: list[str]) -> dict[str, dict]:
 
 @cache_to_disk(_DEFAULT_CACHE_AGE)
 def _finex(ticker: str) -> dict:
-    r = requests.get("https://finex-etf.ru/products/" + ticker)
+    url = "https://finex-etf.ru/products/" + ticker
+    print("Sending request GET " + url)
+    start = time.time()
+    r = requests.get(url)
+    print("Got response in " + str(time.time() - start) + " seconds")
     if r.status_code == 404:
         raise _InstrumentMissingException
     group = re.search('<script id="__NEXT_DATA__" type="application/json">([^<]*)</script>', r.text).group(1)
@@ -56,7 +61,11 @@ def _finex(ticker: str) -> dict:
 
 @cache_to_disk(_DEFAULT_CACHE_AGE)
 def _tinkoff(ticker: str) -> dict:
-    r = requests.get("https://www.tinkoff.ru/invest/etfs/" + ticker)
+    url = "https://www.tinkoff.ru/invest/etfs/" + ticker
+    print("Sending request GET " + url)
+    start = time.time()
+    r = requests.get(url)
+    print("Got response in " + str(time.time() - start) + " seconds")
     r.encoding = 'UTF-8'
     group = re.search("<script>window\\['__REACT_QUERY_STATE__invest'] = '(.*)'</script>", r.text).group(1) \
         .replace('\\\\"', '')

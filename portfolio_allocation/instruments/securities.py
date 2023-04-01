@@ -1,4 +1,5 @@
 import sys
+import time
 
 import pycountry
 import yfinance
@@ -21,7 +22,10 @@ def securities(tickers: list[str]) -> dict[str, dict]:
 
 @cache_to_disk(_DEFAULT_CACHE_AGE)
 def _yahoo(ticker: str) -> dict:
+    print("Sending request to Yahoo Finance for " + ticker)
+    start = time.time()
     info = yfinance.Ticker(ticker).get_info()
+    print("Got response in " + str(time.time() - start) + " seconds")
     if info.get('quoteType') is None:
         raise _InstrumentMissingException
     return {
