@@ -24,5 +24,4 @@ def currencies(currency_codes: list[str]) -> dict[str, dict]:
 
 
 def _to_country(currency: str) -> str:
-    # todo why Europe is missing in the database?
     return 'Europe' if currency == 'EUR' else pycountry.countries.get(alpha_2=currency[0:2]).name
