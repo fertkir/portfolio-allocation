@@ -47,23 +47,36 @@ function init(locale, currency, parameters) {
         };
     }
 
-    function getAllocs(aggregationKey, parameters) {
+    function getAllocs(aggregationKey, parameters, filterOut = {}) {
         const allocs = {};
-        parameters.forEach(p => {
-            let aggregationValue = p[aggregationKey];
-            if (aggregationValue == null) {
-                aggregationValue = {}
-            } else if (typeof aggregationValue !== 'object') {
-                aggregationValue = {[aggregationValue]: 1}
-            }
-            Object.entries(aggregationValue).forEach(entry => {
-                const key = entry[0];
-                const share = entry[1];
-                const existingValue = allocs[key];
-                allocs[key] = p.quantity * share + (existingValue == null ? 0 : existingValue);
+        parameters
+            .filter(p => Object.entries(filterOut)
+                .flatMap(entry => Array.isArray(entry[1])
+                    ? entry[1].map(value => [entry[0], value])
+                    : [entry]
+                )
+                .map(entry => {
+                    const value = p[entry[0]];
+                    return typeof value !== 'object'
+                        ? value !== entry[1]
+                        : !value.hasOwnProperty(entry[1])
+                })
+                .reduce((acc, cur) => acc && cur, true))
+            .forEach(p => {
+                let aggregationValue = p[aggregationKey];
+                if (aggregationValue == null) {
+                    aggregationValue = {}
+                } else if (typeof aggregationValue !== 'object') {
+                    aggregationValue = {[aggregationValue]: 1}
+                }
+                Object.entries(aggregationValue).forEach(entry => {
+                    const key = entry[0];
+                    const share = entry[1];
+                    const existingValue = allocs[key];
+                    allocs[key] = p.quantity * share + (existingValue == null ? 0 : existingValue);
+                });
             });
-        });
-        return Object.fromEntries(Object.entries(allocs).sort(([,a],[,b]) => b-a)); // sorting
+        return Object.fromEntries(Object.entries(allocs).sort(([, a], [, b]) => b - a)); // sorting
     }
 
     const allocationBySelect = document.getElementById("allocationBy")
