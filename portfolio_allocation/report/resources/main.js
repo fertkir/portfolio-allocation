@@ -57,9 +57,8 @@ function init(locale, currency, parameters) {
                 )
                 .map(entry => {
                     const value = p[entry[0]];
-                    return typeof value !== 'object'
-                        ? value !== entry[1]
-                        : !value.hasOwnProperty(entry[1])
+                    return value == null ||
+                        (typeof value !== 'object' ? value !== entry[1] : !value.hasOwnProperty(entry[1]))
                 })
                 .reduce((acc, cur) => acc && cur, true))
             .forEach(p => {
@@ -118,6 +117,7 @@ function init(locale, currency, parameters) {
         const parameter = entry[0];
         const values = entry[1];
         const includes = document.createElement("div");
+        includes.classList.add('includes');
         includes.id = 'includes-' + parameter;
         const label = document.createElement("label");
         label.innerHTML = parameter;
@@ -127,6 +127,8 @@ function init(locale, currency, parameters) {
             const checkbox = document.createElement("input");
             checkbox.setAttribute('type', 'checkbox');
             checkbox.setAttribute('checked', 'true');
+            checkbox.setAttribute('parameter', parameter);
+            checkbox.setAttribute('value', value);
             includes.appendChild(checkbox);
             const label = document.createElement("label");
             label.innerHTML = value;
@@ -138,10 +140,28 @@ function init(locale, currency, parameters) {
     const chart = new Chart(document.getElementById("chart"),
         getConfig(allocationBySelect.value, getAllocs(allocationBySelect.value, parameters)));
 
-    allocationBySelect.addEventListener("change", () => {
-        const config = getConfig(allocationBySelect.value, getAllocs(allocationBySelect.value, parameters));
+    function updateChart(filter = {}) {
+        const config = getConfig(allocationBySelect.value, getAllocs(allocationBySelect.value, parameters, filter));
         chart.data = config.data;
         chart.options.plugins.title.text = config.options.plugins.title.text;
         chart.update();
-    });
+    }
+
+    allocationBySelect.addEventListener("change", updateChart);
+
+    const filters = document.querySelectorAll('input[type=checkbox]'); // todo make selector more specific
+    filters.forEach(elem => elem.addEventListener("change", () => {
+        const filterOut = {};
+        [].filter.call(filters, el => !el.checked).forEach(checkbox => {
+            const parameter = checkbox.getAttribute('parameter');
+            const value = checkbox.getAttribute('value');
+            if (filterOut.hasOwnProperty(parameter)) {
+                filterOut[parameter].push(value);
+            } else {
+                filterOut[parameter] = [value];
+            }
+        });
+        console.log("Filter out: " + filterOut);
+        updateChart(filterOut)
+    }));
 }

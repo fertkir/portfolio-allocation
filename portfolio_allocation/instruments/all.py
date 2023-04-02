@@ -4,6 +4,7 @@ from . import currencies, custom, funds, securities
 def get_data(tickers: list[str]) -> dict[str, dict]:
     custom_info = custom.custom(tickers)
     _custom = custom_info.keys()
+    # todo should not filter out if no parameters are set in custom config:
     not_custom = list(filter(lambda ticker: ticker not in _custom, tickers))
     info_by_currency = currencies.currencies(not_custom)
     _currencies = info_by_currency.keys()
