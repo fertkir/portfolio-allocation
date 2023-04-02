@@ -161,7 +161,7 @@ function init(locale, currency, parameters) {
                 filterOut[parameter] = [value];
             }
         });
-        console.log("Filter out: " + filterOut);
+        console.log("Filter out: " + JSON.stringify(filterOut, null, 4));
         updateChart(filterOut)
     }));
 }
