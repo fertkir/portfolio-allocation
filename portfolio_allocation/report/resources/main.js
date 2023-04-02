@@ -79,12 +79,61 @@ function init(locale, currency, parameters) {
         return Object.fromEntries(Object.entries(allocs).sort(([, a], [, b]) => b - a)); // sorting
     }
 
+    function groupByParameter(parameters) {
+        const valuesByParameter = {};
+        parameters.forEach(p => {
+            Object.entries(p).forEach(entry => {
+                const key = entry[0];
+                let values;
+                if (entry[1] == null) {
+                    values = []
+                } else if (typeof entry[1] === 'object') {
+                    values = Object.keys(entry[1]);
+                } else {
+                    values = [entry[1]]
+                }
+                const existingValue = valuesByParameter[key];
+                if (existingValue == null) {
+                    valuesByParameter[key] = values;
+                } else {
+                    valuesByParameter[key] = [...new Set([...existingValue, ...values])]
+                }
+            });
+        });
+        return valuesByParameter;
+    }
+
+    const valuesByParameter = groupByParameter(parameters);
     const allocationBySelect = document.getElementById("allocationBy")
-    Object.keys(parameters[0]).forEach(k => {
+    Object.keys(valuesByParameter).forEach(k => {
         const elem = document.createElement("option");
         elem.value = k;
         elem.innerHTML = k;
         allocationBySelect.appendChild(elem);
+    });
+
+    const settings = document.getElementById("settings");
+
+    Object.entries(valuesByParameter).forEach(entry => {
+        const parameter = entry[0];
+        const values = entry[1];
+        const includes = document.createElement("div");
+        includes.id = 'includes-' + parameter;
+        const label = document.createElement("label");
+        label.innerHTML = parameter;
+        includes.appendChild(label);
+        includes.appendChild(document.createElement("br"));
+        values.forEach(value => {
+            const checkbox = document.createElement("input");
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('checked', 'true');
+            includes.appendChild(checkbox);
+            const label = document.createElement("label");
+            label.innerHTML = value;
+            includes.appendChild(label);
+            includes.appendChild(document.createElement("br"));
+        })
+        settings.appendChild(includes);
     });
     const chart = new Chart(document.getElementById("chart"),
         getConfig(allocationBySelect.value, getAllocs(allocationBySelect.value, parameters)));
