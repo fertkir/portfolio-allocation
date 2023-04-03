@@ -22,9 +22,18 @@ class CustomDataSource(InstrumentDataSource):
         configs = json.loads(f.read())
         result = {}
         for config in configs:
-            instrument = config['instrument']
-            if instrument in instruments:
-                result[instrument] = config
+            instrument_in_config = config['instrument']
+            if instrument_in_config == '*':
+                for i in instruments:
+                    result[i] = config.copy()
+                    result[i]['instrument'] = i
+            elif instrument_in_config.endswith('*'):
+                for i in instruments:
+                    if i.startswith(instrument_in_config[:-1]):
+                        result[i] = config.copy()
+                        result[i]['instrument'] = i
+            elif instrument_in_config in instruments:
+                result[instrument_in_config] = config.copy()
         return result
 
 
