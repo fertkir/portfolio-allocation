@@ -58,7 +58,7 @@ function init(locale, currency, parameters) {
                 .map(entry => {
                     const value = p[entry[0]];
                     return value == null ||
-                        (typeof value !== 'object' ? value !== entry[1] : !value.hasOwnProperty(entry[1]))
+                        (typeof value !== 'object' ? String(value) !== entry[1] : !value.hasOwnProperty(entry[1]))
                 })
                 .reduce((acc, cur) => acc && cur, true))
             .forEach(p => {
