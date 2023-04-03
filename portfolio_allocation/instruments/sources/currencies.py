@@ -1,16 +1,18 @@
+from dataclasses import asdict
+
 import pycountry
 
 from ..model import InstrumentData, InstrumentDataSource
 
 
 class CurrencyDataSource(InstrumentDataSource):
-    def get(self, instruments: list[str]) -> dict[str, InstrumentData]:
+    def get(self, instruments: list[str]) -> dict[str, dict]:
         result = {}
         for currency_code in instruments:
             currency = pycountry.currencies.get(alpha_3=currency_code)
             if currency is None:
                 continue
-            result[currency_code] = InstrumentData(
+            result[currency_code] = asdict(InstrumentData(
                 instrument=currency_code,
                 countries={
                     self._to_country(currency.alpha_3): 1
@@ -23,7 +25,7 @@ class CurrencyDataSource(InstrumentDataSource):
                 classes={
                     'Cash': 1
                 }
-            )
+            ))
         return result
 
     @staticmethod

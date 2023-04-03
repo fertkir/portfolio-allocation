@@ -3,7 +3,6 @@ import locale
 import os
 import tempfile
 import webbrowser
-from dataclasses import asdict
 from importlib import resources as pkg_resources
 from os.path import expanduser, dirname, realpath, join, exists
 
@@ -32,9 +31,8 @@ def generate(title: str,
     data_by_ticker = instruments.get_data(list(value_by_ticker.keys()))
     data = []
     for key, value in data_by_ticker.items():
-        d = asdict(value)
-        d['quantity'] = value_by_ticker[key]
-        data.append(d)
+        value['quantity'] = value_by_ticker[key]
+        data.append(value)
     _generate_report(title, currency, user_locale, data)
 
 

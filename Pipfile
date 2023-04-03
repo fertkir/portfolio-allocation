@@ -9,7 +9,6 @@ countrynames= "*"
 pycountry = "*"
 requests = "*"
 yfinance = "*"
-dataclass-wizard = "*"
 
 [dev-packages]
 pipenv-setup = "*"

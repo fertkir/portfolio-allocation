@@ -1,16 +1,16 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 @dataclass
 class InstrumentData:
     instrument: str
-    countries: dict[str, float] = field(default_factory=dict)
-    industries: dict[str, float] = field(default_factory=dict)
-    fee: float = 0
-    currencies: dict[str, float] = field(default_factory=dict)
-    classes: dict[str, float] = field(default_factory=dict)
+    countries: dict[str, float]
+    industries: dict[str, float]
+    fee: float
+    currencies: dict[str, float]
+    classes: dict[str, float]
 
 
 class InstrumentDataSource:
-    def get(self, instruments: list[str]) -> dict[str, InstrumentData]:
+    def get(self, instruments: list[str]) -> dict[str, dict]:
         pass

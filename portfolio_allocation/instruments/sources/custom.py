@@ -1,9 +1,7 @@
 import json
 import os
 
-from dataclass_wizard import fromdict # todo can I avoid it?
-
-from ..model import InstrumentData, InstrumentDataSource
+from ..model import InstrumentDataSource
 
 _SECURITIES_CUSTOM_JSON = os.path.join(
     os.environ.get('APPDATA') or
@@ -15,7 +13,7 @@ _SECURITIES_CUSTOM_JSON = os.path.join(
 
 
 class CustomDataSource(InstrumentDataSource):
-    def get(self, instruments: list[str]) -> dict[str, InstrumentData]:
+    def get(self, instruments: list[str]) -> dict[str, dict]:
         if not os.path.exists(_SECURITIES_CUSTOM_JSON):
             print("No custom config \"" + _SECURITIES_CUSTOM_JSON + "\", ignoring it")
             return {}
@@ -26,7 +24,7 @@ class CustomDataSource(InstrumentDataSource):
         for config in configs:
             instrument = config['instrument']
             if instrument in instruments:
-                result[instrument] = fromdict(InstrumentData, config)
+                result[instrument] = config
         return result
 
 
