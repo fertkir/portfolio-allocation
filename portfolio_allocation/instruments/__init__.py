@@ -1,1 +1,1 @@
-from .all import get_data
+from .instruments import get_data

@@ -1,7 +1,8 @@
-from . import currencies, custom, funds, securities
+from .model import InstrumentData
+from .sources import currencies, custom, funds, securities
 
 
-def get_data(tickers: list[str]) -> dict[str, dict]:
+def get_data(tickers: list[str]) -> dict[str, InstrumentData]:
     custom_info = custom.custom(tickers)
     _custom = custom_info.keys()
     # todo should not filter out if no parameters are set in custom config:
