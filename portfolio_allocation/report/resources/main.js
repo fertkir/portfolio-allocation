@@ -119,21 +119,25 @@ function init(locale, currency, parameters) {
         const includes = document.createElement("div");
         includes.classList.add('includes');
         includes.id = 'includes-' + parameter;
-        const label = document.createElement("label");
-        label.innerHTML = parameter;
-        includes.appendChild(label);
-        includes.appendChild(document.createElement("br"));
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add('collapsible');
+        button.innerHTML = parameter;
+        includes.appendChild(button);
+        const content = document.createElement("div");
+        content.classList.add('content');
+        includes.appendChild(content);
         values.forEach(value => {
             const checkbox = document.createElement("input");
             checkbox.setAttribute('type', 'checkbox');
             checkbox.setAttribute('checked', 'true');
             checkbox.setAttribute('parameter', parameter);
             checkbox.setAttribute('value', value);
-            includes.appendChild(checkbox);
+            content.appendChild(checkbox);
             const label = document.createElement("label");
             label.innerHTML = value;
-            includes.appendChild(label);
-            includes.appendChild(document.createElement("br"));
+            content.appendChild(label);
+            content.appendChild(document.createElement("br"));
         })
         settings.appendChild(includes);
     });
@@ -164,4 +168,12 @@ function init(locale, currency, parameters) {
         console.log("Filter out: " + JSON.stringify(filterOut, null, 4));
         updateChart(filterOut)
     }));
+
+    [].forEach.call(document.getElementsByClassName("collapsible"),
+            elem => elem.addEventListener("click", function() {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        })
+    );
 }
