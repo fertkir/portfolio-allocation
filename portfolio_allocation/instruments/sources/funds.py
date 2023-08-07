@@ -73,7 +73,7 @@ def _tinkoff(instrument: str) -> dict:
     r = requests.get(url)
     print("Got response in " + str(time.time() - start) + " seconds")
     r.encoding = 'UTF-8'
-    group = re.search("<script id=\"__REACT_QUERY_STATE__invest\" type=\"application/json\">(.*)</script><script>", r.text).group(1) \
+    group = re.search("<script id=\"__REACT_QUERY_STATE__invest\" type=\"application/json\">(.*?)</script>", r.text).group(1) \
         .replace('\\\\"', '')
     data = json.loads(group)
     try:
