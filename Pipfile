@@ -15,4 +15,4 @@ pipenv-setup = "*"
 vistir = "==0.6.1" # https://github.com/Madoshakalaka/pipenv-setup/issues/138
 
 [requires]
-python_version = "3.10"
+python_version = "3.12"

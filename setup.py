@@ -43,7 +43,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.2.4",
+    version="0.3.0",
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
@@ -97,7 +97,7 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         # These classifiers are *not* checked by 'pip install'. See instead
         # 'python_requires' below.
-        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.12",
     ],
     # This field adds keywords for your project which will appear on the
     # project page. What does your project relate to?
@@ -126,7 +126,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['appdirs==1.4.4', 'banal==1.0.6', "beautifulsoup4==4.12.2; python_full_version >= '3.6.0'", 'cache-to-disk==2.0.0', "certifi==2023.7.22; python_version >= '3.6'", "chardet==5.2.0; python_version >= '3.7'", "charset-normalizer==3.2.0; python_full_version >= '3.7.0'", 'countrynames==1.15.2', "frozendict==2.3.8; python_version >= '3.6'", "html5lib==1.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'", "idna==3.4; python_version >= '3.5'", "jellyfish==1.0.0; python_version >= '3.7'", "lxml==4.9.3; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'", 'multitasking==0.0.11', 'normality==2.4.0', "numpy==1.25.2; python_version >= '3.9'", "pandas==2.0.3; python_version >= '3.8'", 'pycountry==22.3.5', "python-dateutil==2.8.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'", 'pytz==2023.3', "pyyaml==6.0.1; python_version >= '3.6'", 'requests==2.31.0', "setuptools==68.0.0; python_version >= '3.7'", "six==1.16.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'", "soupsieve==2.4.1; python_version >= '3.7'", 'text-unidecode==1.3', "tzdata==2023.3; python_version >= '2'", "urllib3==2.0.4; python_version >= '3.7'", 'webencodings==0.5.1', 'yfinance==0.2.27'],
+    install_requires=['appdirs==1.4.4', 'banal==1.0.6', "beautifulsoup4==4.12.2; python_full_version >= '3.6.0'", 'cache-to-disk==2.0.0', "certifi==2023.11.17; python_version >= '3.6'", "chardet==5.2.0; python_version >= '3.7'", "charset-normalizer==3.3.2; python_full_version >= '3.7.0'", 'countrynames==1.15.3', "frozendict==2.3.10; python_version >= '3.6'", "html5lib==1.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'", "idna==3.6; python_version >= '3.5'", "jellyfish==1.0.3; python_version >= '3.7'", "lxml==4.9.3; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'", 'multitasking==0.0.11', 'normality==2.5.0', "numpy==1.26.2; python_version >= '3.9'", "pandas==2.1.4; python_version >= '3.9'", 'peewee==3.17.0', "pycountry==23.12.7; python_version >= '3.8'", "python-dateutil==2.8.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'", 'pytz==2023.3.post1', "pyyaml==6.0.1; python_version >= '3.6'", "requests==2.31.0; python_version >= '3.7'", "six==1.16.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'", "soupsieve==2.5; python_version >= '3.8'", 'text-unidecode==1.3', "tzdata==2023.3; python_version >= '2'", "urllib3==2.1.0; python_version >= '3.8'", 'webencodings==0.5.1', 'yfinance==0.2.33'],
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:
