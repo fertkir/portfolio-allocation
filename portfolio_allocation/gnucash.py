@@ -15,10 +15,24 @@ class ParseException(Exception):
     pass
 
 
+class CannotRunGnuCash(Exception):
+    pass
+
+
 def get_value_by_instrument(report_name: str, datafile: str) -> ParsedGnuCashReport:
-    cmd = ['gnucash-cli', '--report', 'run', '--name=' + report_name, datafile]
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    proc = _try_run_gnucash_cli(['--report', 'run', '--name=' + report_name, datafile])
     return parse_value_by_instrument(proc.stdout.read().decode('utf-8'))
+
+
+def _try_run_gnucash_cli(params: [str]):
+    cmd_list = [['gnucash-cli'], ['flatpak', 'run', '--command=gnucash-cli', 'org.gnucash.GnuCash']]
+    for cmd in cmd_list:
+        try:
+            cmd.extend(params)
+            return subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        except:
+            continue
+    raise CannotRunGnuCash()
 
 
 def parse_value_by_instrument(html_report: str) -> ParsedGnuCashReport:
