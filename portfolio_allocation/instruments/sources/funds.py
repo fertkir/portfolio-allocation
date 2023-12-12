@@ -1,4 +1,5 @@
 import json
+import multiprocessing
 import re
 import sys
 import time
@@ -16,18 +17,26 @@ _DEFAULT_CACHE_AGE = 30
 
 class FundsDataSource(InstrumentDataSource):
     def get(self, instruments: list[str]) -> dict[str, dict]:
-        result = {}
-        for instrument in instruments:
-            try:
-                if instrument.startswith("FX"):
-                    result[instrument] = _finex(instrument)
-                elif instrument.startswith("T"):
-                    result[instrument] = _tinkoff(instrument)
-                else:
-                    continue
-            except _InstrumentMissingException:
-                continue
-        return result
+        pool = multiprocessing.Pool(len(instruments))
+        results = pool.map(_get_result, [instrument for instrument in instruments])
+        pool.close()
+        return_values = {}
+        for index, instrument in enumerate(instruments):
+            if results[index] is not None:
+                return_values[instrument] = results[index]
+        return return_values
+
+
+def _get_result(instrument: str) -> dict | None:
+    try:
+        if instrument.startswith("FX"):
+            return _finex(instrument)
+        elif instrument.startswith("T"):
+            return _tinkoff(instrument)
+        else:
+            return None
+    except _InstrumentMissingException:
+        return None
 
 
 @cache_to_disk(_DEFAULT_CACHE_AGE)
@@ -36,7 +45,7 @@ def _finex(instrument: str) -> dict:
     print("Sending request GET " + url)
     start = time.time()
     r = requests.get(url)
-    print("Got response in " + str(time.time() - start) + " seconds")
+    print("Got response for " + url + " in " + str(time.time() - start) + " seconds")
     if r.status_code == 404:
         raise _InstrumentMissingException
     group = re.search('<script id="__NEXT_DATA__" type="application/json">([^<]*)</script>', r.text).group(1)
@@ -71,9 +80,10 @@ def _tinkoff(instrument: str) -> dict:
     print("Sending request GET " + url)
     start = time.time()
     r = requests.get(url)
-    print("Got response in " + str(time.time() - start) + " seconds")
+    print("Got response for " + url + " in " + str(time.time() - start) + " seconds")
     r.encoding = 'UTF-8'
-    group = re.search("<script id=\"__REACT_QUERY_STATE__invest\" type=\"application/json\">(.*?)</script>", r.text).group(1) \
+    group = re.search("<script id=\"__REACT_QUERY_STATE__invest\" type=\"application/json\">(.*?)</script>",
+                      r.text).group(1) \
         .replace('\\\\"', '')
     data = json.loads(group)
     try:
