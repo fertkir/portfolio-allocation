@@ -1,5 +1,4 @@
 import json
-import multiprocessing
 import re
 import sys
 import time
@@ -17,9 +16,11 @@ _DEFAULT_CACHE_AGE = 30
 
 class FundsDataSource(InstrumentDataSource):
     def get(self, instruments: list[str]) -> dict[str, dict]:
-        pool = multiprocessing.Pool(len(instruments))
-        results = pool.map(_get_result, [instrument for instrument in instruments])
-        pool.close()
+        # fixme: parallelization leads to races in caching library
+        # pool = multiprocessing.Pool(len(instruments))
+        # results = pool.map(_get_result, [instrument for instrument in instruments])
+        results = [_get_result(instrument) for instrument in instruments]
+        # pool.close()
         return_values = {}
         for index, instrument in enumerate(instruments):
             if results[index] is not None:
