@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "portfolio-allocation"
+version = "0.3.4"
+description = "Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds"
+authors = ["Kirill Fertikov <kirill.fertikov@gmail.com>"]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+homepage = "https://pypi.org/project/portfolio-allocation/"
+repository = "https://github.com/fertkir/portfolio-allocation"
+keywords = ["etf", "allocation", "moex", "tinkoff", "finex", "gnucash"]
+classifiers = [
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: End Users/Desktop",
+        "Topic :: Office/Business :: Financial :: Investment",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Programming Language :: Python :: 3.12",
+]
+exclude = ["contrib", "docs", "tests"]
+include = [
+    "report/resources/report_template.html",
+    "report/resources/main.js",
+    "report/resources/main.css"
+]
+
+[tool.poetry.scripts]
+portfolio-allocation = 'portfolio_allocation.cli:main'
+
+[tool.poetry.urls]
+"Bug Reports" = "https://github.com/fertkir/portfolio-allocation/issues"
+"Source" = "https://github.com/fertkir/portfolio-allocation"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+cache-to-disk= "*"
+countrynames= "*"
+pycountry = "*"
+requests = "*"
+yfinance = "*"
+
+[tool.poetry.dev-dependencies]
+pipenv-setup = "*"
+vistir = "==0.6.1" # https://github.com/Madoshakalaka/pipenv-setup/issues/138
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
