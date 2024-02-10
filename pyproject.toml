@@ -29,7 +29,7 @@ portfolio-allocation = 'portfolio_allocation.cli:main'
 
 [tool.poetry.dependencies]
 python = "^3.12"
-cache-to-disk= "*"
+diskcache = "*"
 countrynames= "*"
 pycountry = "*"
 requests = "*"
@@ -37,7 +37,6 @@ yfinance = "*"
 
 [tool.poetry.dev-dependencies]
 pipenv-setup = "*"
-vistir = "==0.6.1" # https://github.com/Madoshakalaka/pipenv-setup/issues/138
 
 [build-system]
 requires = ["poetry-core"]

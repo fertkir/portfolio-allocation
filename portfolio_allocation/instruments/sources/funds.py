@@ -1,4 +1,5 @@
 import json
+import multiprocessing
 import re
 import sys
 import time
@@ -7,20 +8,16 @@ from dataclasses import asdict
 import countrynames
 import pycountry
 import requests
-from cache_to_disk import cache_to_disk
 
+from ...cache import cache, CACHE_EXPIRATION
 from ..model import InstrumentData, InstrumentDataSource
-
-_DEFAULT_CACHE_AGE = 30
 
 
 class FundsDataSource(InstrumentDataSource):
     def get(self, instruments: list[str]) -> dict[str, dict]:
-        # fixme: parallelization leads to races in caching library
-        # pool = multiprocessing.Pool(len(instruments))
-        # results = pool.map(_get_result, [instrument for instrument in instruments])
-        results = [_get_result(instrument) for instrument in instruments]
-        # pool.close()
+        pool = multiprocessing.Pool(len(instruments))
+        results = pool.map(_get_result, [instrument for instrument in instruments])
+        pool.close()
         return_values = {}
         for index, instrument in enumerate(instruments):
             if results[index] is not None:
@@ -40,7 +37,7 @@ def _get_result(instrument: str) -> dict | None:
         return None
 
 
-@cache_to_disk(_DEFAULT_CACHE_AGE)
+@cache.memoize(expire=CACHE_EXPIRATION)
 def _finex(instrument: str) -> dict:
     url = "https://finex-etf.ru/products/" + instrument
     print("Sending request GET " + url)
@@ -75,7 +72,7 @@ def _finex(instrument: str) -> dict:
     ))
 
 
-@cache_to_disk(_DEFAULT_CACHE_AGE)
+@cache.memoize(expire=CACHE_EXPIRATION)
 def _tinkoff(instrument: str) -> dict:
     url = "https://www.tinkoff.ru/invest/etfs/" + instrument
     print("Sending request GET " + url)

@@ -66,17 +66,6 @@ html5lib = ["html5lib"]
 lxml = ["lxml"]
 
 [[package]]
-name = "cache-to-disk"
-version = "2.0.0"
-description = "Local disk caching decorator for python function."
-optional = false
-python-versions = "*"
-files = [
-    {file = "cache_to_disk-2.0.0-py3-none-any.whl", hash = "sha256:ea5afe13d4284cb4a06169b0807fbc60547cbe19c54563bf90e1d44f24029481"},
-    {file = "cache_to_disk-2.0.0.tar.gz", hash = "sha256:79e19ea9b72eedc5cec83bb8aa55374afc671493e7d13d541f3b63eb3a13fb32"},
-]
-
-[[package]]
 name = "cached-property"
 version = "1.5.2"
 description = "A decorator for caching properties in classes."
@@ -248,6 +237,17 @@ pyyaml = "*"
 
 [package.extras]
 dev = ["mypy", "pytest", "twine", "types-PyYAML", "wheel"]
+
+[[package]]
+name = "diskcache"
+version = "5.6.3"
+description = "Disk Cache -- Disk and file backed persistent cache."
+optional = false
+python-versions = ">=3"
+files = [
+    {file = "diskcache-5.6.3-py3-none-any.whl", hash = "sha256:5e31b2d5fbad117cc363ebaf6b689474db18a1f6438bc82358b024abd4c2ca19"},
+    {file = "diskcache-5.6.3.tar.gz", hash = "sha256:2c3a3fa2743d8535d832ec61c2054a1641f41775aa7c556758a109941e33e4fc"},
+]
 
 [[package]]
 name = "distlib"
@@ -1143,4 +1143,4 @@ repair = ["scipy (>=1.6.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "1da79a6680ea828200fc79314475cf163a32a4252c05d67c10941d0cdb2dfec7"
+content-hash = "0dfd869b21c2fb064315c79c28e74a8bc73805ec01cda8f955ac6945be341e54"

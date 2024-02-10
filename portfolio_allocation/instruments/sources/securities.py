@@ -4,11 +4,10 @@ from dataclasses import asdict
 
 import pycountry
 import yfinance
-from cache_to_disk import cache_to_disk
 
-from portfolio_allocation.instruments.model import InstrumentData, InstrumentDataSource
+from ...cache import cache, CACHE_EXPIRATION
+from ..model import InstrumentData, InstrumentDataSource
 
-_DEFAULT_CACHE_AGE = 30
 _DEFAULT_EXCHANGE = "ME"  # todo parameterize it in some other way
 
 
@@ -24,7 +23,8 @@ class SecurityDataSource(InstrumentDataSource):
                 continue
         return result
 
-@cache_to_disk(_DEFAULT_CACHE_AGE)
+
+@cache.memoize(expire=CACHE_EXPIRATION)
 def _yahoo(instrument: str, instrument_with_exchange: str) -> dict:
     print("Sending request to Yahoo Finance for " + instrument)
     start = time.time()
