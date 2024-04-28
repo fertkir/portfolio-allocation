@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portfolio-allocation"
-version = "0.3.8"
+version = "0.3.9"
 description = "Calculates currency, country and industry allocations for portfolio of ETFs and mutual funds"
 authors = ["Kirill Fertikov <kirill.fertikov@gmail.com>"]
 readme = "README.md"
