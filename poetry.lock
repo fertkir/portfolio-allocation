@@ -158,13 +158,13 @@ files = [
 
 [[package]]
 name = "countrynames"
-version = "1.16.0"
+version = "1.16.1"
 description = "A library to map country names to ISO codes."
 optional = false
 python-versions = "*"
 files = [
-    {file = "countrynames-1.16.0-py3-none-any.whl", hash = "sha256:e04198c2c3aec591a7a8ac1b33578ae506ca8afc5a37e7a4388a1c07798859ff"},
-    {file = "countrynames-1.16.0.tar.gz", hash = "sha256:c1529b48992db0f2dbc04eba80d44de51b42aacd3af06c42cbd74ae8a0656e94"},
+    {file = "countrynames-1.16.1-py3-none-any.whl", hash = "sha256:d6717bdc3b0108ba670abb15e353205032728e541c5369ab5a6c8f90f36b0560"},
+    {file = "countrynames-1.16.1.tar.gz", hash = "sha256:8c0538ec52c86a111d38db90249a890755bca0308f41aa033dedbf27f722d1dc"},
 ]
 
 [package.dependencies]
